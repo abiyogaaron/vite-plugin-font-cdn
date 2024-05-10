@@ -1,0 +1,49 @@
+{
+  "name": "vite-plugin-font-cdn",
+  "version": "1.0.0",
+  "description": "vite-plugin cdn font injector and generator for @font-face",
+  "main": "dist/index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abiyogaaron/vite-plugin-font-cdn"
+  },
+  "bugs": {
+    "url": "https://github.com/abiyogaaron/vite-plugin-font-cdn/issues"
+  },
+  "homepage": "https://github.com/abiyogaaron/vite-plugin-font-cdn/tree/main/#readme",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "biome lint ./src --config-path=./",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "vite-plugin",
+    "fonts",
+    "cdn"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": [
+      "npm run lint"
+    ]
+  },
+  "author": "abiyogaaron",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.3",
+    "husky": "^9.0.11",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}
