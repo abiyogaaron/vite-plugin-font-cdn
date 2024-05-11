@@ -30,6 +30,7 @@
     "build": "NODE_ENV=production tsup --config ./tsup.config.ts",
     "watch": "NODE_ENV=development tsup --config ./tsup.config.ts --watch",
     "lint": "biome lint ./src --config-path=./",
+    "lint:fix": "biome check --apply ./src --config-path=./",
     "prepare": "husky install"
   },
   "peerDependencies": {
@@ -49,7 +50,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,ts}": [
-      "npm run lint"
+      "npm run lint:fix"
     ]
   },
   "author": {
@@ -59,7 +60,7 @@
   "license": "ISC",
   "devDependencies": {
     "@biomejs/biome": "^1.7.3",
-    "husky": "^9.0.11",
+    "husky": "^8.0.3",
     "tsup": "^8.0.2"
   },
   "dependencies": {
