@@ -1,4 +1,4 @@
-import { Property } from 'csstype';
+import type { Property } from "csstype";
 
 export interface IFontFamily {
   url: string;
@@ -26,7 +26,7 @@ export interface IFontFamily {
    *
    * See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display
    */
-  display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  display?: "auto" | "block" | "swap" | "fallback" | "optional";
   /**
    * `font-variant` for this variant.
    *

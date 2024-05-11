@@ -1,17 +1,10 @@
-import { PluginOption } from "vite";
-import {
-  IPluginParams,
-  IFontFamily,
-} from './types';
-import {
-  generateFontHtmlTag,
-} from './lib/util';
-import {
-  errorLog,
-} from './lib/log';
+import type { PluginOption } from "vite";
+import { errorLog } from "./lib/log";
+import { generateFontHtmlTag } from "./lib/util";
+import { IFontFamily, IPluginParams } from "./types";
 
-const VitePluginFontCdn = (options: IPluginParams): any => {
-  const plugin: PluginOption = { name: 'vite-plugin-font-cdn'};
+const VitePluginFontCdn = (options: IPluginParams): PluginOption => {
+  const plugin: PluginOption = { name: "vite-plugin-font-cdn" };
 
   plugin.transformIndexHtml = () => {
     if (!options) {
@@ -26,12 +19,9 @@ const VitePluginFontCdn = (options: IPluginParams): any => {
     const tags = generateFontHtmlTag(options);
 
     return tags;
-  } 
+  };
   return plugin;
-}
+};
 
-export {
-  IPluginParams,
-  IFontFamily,
-}
+export { IPluginParams, IFontFamily };
 export default VitePluginFontCdn;
