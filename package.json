@@ -33,9 +33,6 @@
     "lint:fix": "biome check --apply ./src --config-path=./",
     "prepare": "husky install"
   },
-  "peerDependencies": {
-    "vite": "^5.0.0"
-  },
   "keywords": [
     "vite",
     "vite-plugin",
@@ -67,6 +64,6 @@
     "chalk": "^4.1.2",
     "csstype": "^3.1.3",
     "typescript": "^5.4.5",
-    "vite": "^5.0.0"
+    "vite": "^5.2.11"
   }
 }

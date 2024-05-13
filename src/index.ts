@@ -1,26 +1,30 @@
-import type { PluginOption } from "vite";
+import type { Plugin } from "vite";
 import { errorLog } from "./lib/log";
-import { generateFontHtmlTag } from "./lib/util";
+import { generateFontFace, generateFontHtmlTag } from "./lib/util";
 import { IFontFamily, IPluginParams } from "./types";
 
-const VitePluginFontCdn = (options: IPluginParams): PluginOption => {
-  const plugin: PluginOption = { name: "vite-plugin-font-cdn" };
+const VitePluginFontCdn = (options: IPluginParams) => {
+  return {
+    name: "vite-plugin-font-cdn",
+    transformIndexHtml() {
+      if (!options) {
+        errorLog("config plugin is not available.");
+        throw new Error("config plugin is not available.");
+      }
+      if (options.fontFamilies.length === 0) {
+        errorLog("font families are empty.");
+        throw new Error("font families are empty.");
+      }
 
-  plugin.transformIndexHtml = () => {
-    if (!options) {
-      errorLog("config plugin not available.");
-      throw new Error("config plugin not available.");
-    }
-    if (options.fontFamilies.length === 0) {
-      errorLog("config plugin not available.");
-      throw new Error("font families empty.");
-    }
+      const htmlTag = generateFontHtmlTag(options);
+      const styleTag = generateFontFace(options);
 
-    const tags = generateFontHtmlTag(options);
+      htmlTag.push(styleTag);
 
-    return tags;
-  };
-  return plugin;
+      return htmlTag;
+    },
+    generateBundle() {},
+  } satisfies Plugin;
 };
 
 export { IPluginParams, IFontFamily };

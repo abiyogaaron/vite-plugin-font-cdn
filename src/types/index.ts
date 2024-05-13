@@ -38,4 +38,5 @@ export interface IFontFamily {
 export interface IPluginParams {
   fontFamilies: IFontFamily[];
   isPreload: boolean;
+  isGenerateFontFace: boolean;
 }

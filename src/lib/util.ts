@@ -1,6 +1,34 @@
 import type { HtmlTagDescriptor } from "vite";
-import type { IPluginParams } from "../types";
+import type { IFontFamily, IPluginParams } from "../types";
 import { errorLog, successLog } from "./log";
+
+type attributes = keyof Omit<IFontFamily, "url">;
+
+export const transformFontRules = (fontFamily: IFontFamily) => {
+  const attributesMap: Record<attributes, string> = {
+    family: "family",
+    display: "display",
+    stretch: "stretch",
+    style: "style",
+    variant: "variant",
+    weight: "weight",
+  };
+
+  const fontFaceAttr: string[] = [];
+  Object.entries(fontFamily).forEach(([key, value]) => {
+    if (!attributesMap[key as attributes]) {
+      return;
+    }
+
+    const attrPrefix = attributesMap[key as attributes];
+    let attrValue = value;
+    if (attrPrefix === "family") {
+      attrValue = `"${attrValue}"`;
+    }
+    fontFaceAttr.push(`font-${attrPrefix}: ${attrValue};`);
+  });
+  return fontFaceAttr;
+};
 
 export const checkFormat = (ext: string | undefined) => {
   const formatMap: Record<string, string> = {
@@ -43,8 +71,20 @@ export const generateFontHtmlTag = (options: IPluginParams): HtmlTagDescriptor[]
   });
 };
 
-// export const generateFontFace = (options: IPluginParams) => {
-//   for (const font of options.fontFamilies) {
+export const generateFontFace = (options: IPluginParams): HtmlTagDescriptor => {
+  const fontFaceArr = options.fontFamilies.map((font) => {
+    const fontFaceString = ["@font-face {", `  src: url("${font.url}");`, ...transformFontRules(font), "}"].join("\n");
 
-//   }
-// }
+    successLog(`Generating @font-face ===> ${fontFaceString}`);
+    return fontFaceString;
+  });
+
+  const children = fontFaceArr.join("\n\n");
+  return {
+    tag: "style",
+    attrs: {
+      type: "text/css",
+    },
+    children: `\n${children}\n`,
+  };
+};
